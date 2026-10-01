@@ -128,7 +128,7 @@ jobs:
         run: make container.test
 
   release:
-    if: github.repository_owner == 'searxng' && github.ref_name == 'master'
+    if: github.repository_owner == 'ptrslvk' && github.ref_name == 'master'
     name: Release
     runs-on: ubuntu-26.04-arm
     needs:
@@ -150,8 +150,8 @@ jobs:
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
         with:
           registry: "ghcr.io"
-          username: "${{ github.repository_owner }}"
-          password: "${{ secrets.GITHUB_TOKEN }}"
+          username: "ptrslvk"
+          password: "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"
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
