@@ -136,7 +136,7 @@ jobs:
         with:
           registry: "ghcr.io"
           username: "ptrslvk"
-          password: "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"
+          password: "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"
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
