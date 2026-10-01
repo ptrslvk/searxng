@@ -27,7 +27,7 @@ jobs:
   build:
     if: |
       github.event_name == 'workflow_dispatch'
-      || (github.repository_owner == 'searxng' && github.event.workflow_run.conclusion == 'success')
+      || (github.repository_owner == 'ptrslvk' && github.event.workflow_run.conclusion == 'success')
     name: Build (${{ matrix.arch }})
     runs-on: ${{ matrix.runner }}
     strategy:
@@ -36,10 +36,6 @@ jobs:
         include:
           - runner: ubuntu-26.04
             arch: amd64
-          - runner: ubuntu-26.04-arm
-            arch: arm64
-          - runner: ubuntu-26.04-arm
-            arch: armv7
 
     outputs:
       docker_tag: ${{ steps.build.outputs.docker_tag }}
@@ -100,10 +96,6 @@ jobs:
         include:
           - runner: ubuntu-26.04
             arch: amd64
-          - runner: ubuntu-26.04-arm
-            arch: arm64
-          - runner: ubuntu-26.04
-            arch: armv7
 
     steps:
       - name: Setup QEMU
@@ -113,7 +105,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           ref: "${{ github.event.workflow_run.head_sha || github.sha }}"
-          persist-credentials: "false"
+          persist-credentials: "true"
 
       - name: Download container image
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
@@ -140,14 +132,14 @@ jobs:
 
     steps:
       - name: Login to Docker Hub
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
+        uses: docker/login-action@v4.6.0
         with:
           registry: "docker.io"
           username: "${{ secrets.DOCKER_USER }}"
           password: "${{ secrets.DOCKER_TOKEN }}"
 
       - name: Login to GHCR
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
+        uses: docker/login-action@v4.6.0  # v4.6.0
         with:
           registry: "ghcr.io"
           username: "ptrslvk"
@@ -157,7 +149,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           ref: "${{ github.event.workflow_run.head_sha || github.sha }}"
-          persist-credentials: "false"
+          persist-credentials: "true"
 
       - name: Download container images
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
